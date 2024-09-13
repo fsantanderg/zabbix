@@ -1,7 +1,7 @@
 services:
 
   zabbix-db:
-    image: mysql:8.0.30  # Cambia aquí la versión de MySQL
+    image: mysql:8.0.30
     environment:
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
@@ -39,7 +39,7 @@ services:
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: zabbix_password
       MYSQL_ROOT_PASSWORD: root_password
-      PHP_TZ: Europe/Riga
+      PHP_TZ: America/Santiago
     depends_on:
       - zabbix-db
       - zabbix-server
@@ -51,7 +51,7 @@ services:
   zabbix-agent:
     image: zabbix/zabbix-agent:latest
     environment:
-      ZBX_HOSTNAME: "Zabbix server"
+      ZBX_HOSTNAME: "zabbix-agent-1"
       ZBX_SERVER_HOST: zabbix-server
     depends_on:
       - zabbix-server
