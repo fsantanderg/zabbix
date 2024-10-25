@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbix-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-server
+  template:
+    metadata:
+      labels:
+        app: zabbix-server
+    spec:
+      containers:
+      - name: zabbix-server
+        image: zabbix/zabbix-server-mysql:latest
+        ports:
+        - containerPort: 10051
+        env:
+        - name: DB_SERVER_HOST
+          value: "my-mysql"
+        - name: MYSQL_USER
+          value: "zabbix"
+        - name: MYSQL_PASSWORD
+          value: "zabbix_password"
+        - name: MYSQL_DATABASE
+          value: "zabbix"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
