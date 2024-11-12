@@ -6,10 +6,10 @@ metadata:
   labels:
     app: zabbix-web
 spec:
-  type: LoadBalancer
+  #type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
-      nodePort: 30000
+      #nodePort: 30000
   selector:
     app: zabbix-web
