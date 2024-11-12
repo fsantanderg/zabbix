@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zabbix-agent
+  namespace: zabbix2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zabbix-agent
+  template:
+    metadata:
+      labels:
+        app: zabbix-agent
+    spec:
+      containers:
+      - name: zabbix-agent
+        image: zabbix/zabbix-agent  # Usa la imagen del agente de Zabbix 7.0.5
+        env:
+        - name: ZBX_HOSTNAME  # Pasamos el hostname como variable de entorno para ser dinámico
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/zabbix/zabbix_agentd.conf
+          subPath: zabbix_agentd.conf
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: zabbix-agent-config
