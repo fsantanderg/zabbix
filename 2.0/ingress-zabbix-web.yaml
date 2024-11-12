@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-zabbix.dgsoft.cl"
+    kubernetes.io/tls-acme: "true"
+  name: zabbix.dgsoft.cl
+  namespace: zabbix2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: zabbix.dgsoft.cl
+      http:
+        paths:
+          - backend:
+              service:
+                name: zabbix-web
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+    - host: www.zabbix.dgsoft.cl
+      http:
+        paths:
+          - backend:
+              service:
+                name: zabbix-web
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+      - hosts:
+          - zabbix.dgsoft.cl
+          - www.zabbix.dgsoft.cl
+        secretName: zabbix.dgsoft.cl-tls

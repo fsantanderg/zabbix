@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-zabbix.dgsoft.cl
+  namespace: zabbix2
+spec:
+  acme:
+    email: fsantanderg@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-zabbix.dgsoft.cl
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+       ingress:
+         class: nginx
