@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3   # Tipo de volumen (gp3 es el tipo general más económico y eficiente)
+  fsType: ext4  # Sistema de archivos
+  encrypted: "true"  # Habilita el cifrado de los volúmenes
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
