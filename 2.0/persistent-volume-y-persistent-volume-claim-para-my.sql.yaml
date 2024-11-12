@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: pv-zabbix-mysql
 spec:
+  storageClassName: ebs-sc  # Nombre del StorageClass creado
   capacity:
     storage: 10Gi
   accessModes:
