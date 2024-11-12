@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zabbix-config
+  namespace: zabbix
+data:
+  ZBX_SERVER_DB_PASSWORD: "zabbix_db_password"
