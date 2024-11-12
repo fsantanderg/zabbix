@@ -22,8 +22,8 @@ spec:
         - name: MYSQL_DATABASE
           value: "zabbix"
         - name: MYSQL_USER
-          value: "zabbix"
+          value: "root"
         - name: MYSQL_PASSWORD
-          value: "zabbix_password"
+          value: "root_password"
         ports:
         - containerPort: 10051
