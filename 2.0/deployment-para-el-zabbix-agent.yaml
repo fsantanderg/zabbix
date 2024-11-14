@@ -15,9 +15,11 @@ spec:
     spec:
       containers:
       - name: zabbix-agent
-        image: zabbix/zabbix-agent  # Usa la imagen del agente de Zabbix 7.0.5
+        image: zabbix/zabbix-agent:6.0.29-alpine
+
+  # Usa la imagen del agente de Zabbix 7.0.5
         env:
-        - name: ZBX_HOSTNAME  # Pasamos el hostname como variable de entorno para ser dinámico
+        - name: zabbix-agent2  # Pasamos el hostname como variable de entorno para ser dinámico
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
