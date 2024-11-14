@@ -4,9 +4,10 @@ metadata:
   name: zabbix-agent-config
   namespace: zabbix2
 data:
-#ServerActive=zabbix-agent  # IP o hostname del servidor Zabbix para monitoreo activo
+#
   zabbix_agentd.conf: |
-    Server=10.0.3.138
-    Hostname=10.0.3.138
+    Server=172.20.123.51
+    ServerActive=172.20.123.51
+    Hostname=172.20.123.51
     LogFile=/dev/stdout
     DebugLevel=3
