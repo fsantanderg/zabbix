@@ -1,7 +1,43 @@
 services:
 
+  #N°1 DOCKER -> proxy
+  proxy_app:
+    container_name: proxy_app
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    environment:
+      DB_MYSQL_HOST: "proxy_db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "user_proxy_db"
+      DB_MYSQL_PASSWORD: "y6ggcaeaNJdMvwAxrZ4WSNcmfjgyJFK85E7cHcyJfTh8u2"
+      DB_MYSQL_NAME: "proxy_db"
+    volumes:
+      - proxy_data:/data
+      - proxy_letsencrypt:/etc/letsencrypt
+    depends_on:
+      - proxy_db
+
+  #N°2 DOCKER -> proxy_db
+  #Email:    admin@example.com
+  #Password: changeme
+  proxy_db:
+    container_name: proxy_db
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: '5ctw2DMr4Jx4w3AQJ3u4uxmyrjRtmcMqqj3VE78scnDyx'
+      MYSQL_DATABASE: 'proxy_db'
+      MYSQL_USER: 'user_proxy_db'
+      MYSQL_PASSWORD: 'y6ggcaeaNJdMvwAxrZ4WSNcmfjgyJFK85E7cHcyJfTh8u2'
+    volumes:
+      - proxy_db:/var/lib/mysql
+
   zabbix-db:
-    image: mysql:8.0.30  # Cambia aquí la versión de MySQL
+    image: mysql:8.0.30 # Cambia aquí la versión de MySQL
     environment:
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
@@ -10,8 +46,8 @@ services:
     volumes:
       - ./zabbix-db:/var/lib/mysql
     restart: always
-    ports:
-      - "3306:3306"
+    #ports:
+    #  - "3306:3306"
     expose:
       - "3306"
 
@@ -25,8 +61,8 @@ services:
       MYSQL_ROOT_PASSWORD: root_password
     depends_on:
       - zabbix-db
-    ports:
-      - "10051:10051"
+    expose:
+      - "10051"
     volumes:
       - ./zabbix-server:/var/lib/zabbix
     restart: always
@@ -39,7 +75,8 @@ services:
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: zabbix_password
       MYSQL_ROOT_PASSWORD: root_password
-      PHP_TZ: Europe/Riga
+      PHP_TZ: America/Santiago
+      ZBX_SERVER_HOST: "zabbix-server"
     depends_on:
       - zabbix-db
       - zabbix-server
@@ -55,6 +92,11 @@ services:
       ZBX_SERVER_HOST: zabbix-server
     depends_on:
       - zabbix-server
-    ports:
-      - "10050:10050"
+    expose:
+      - "10050"
     restart: always
+
+volumes:
+  proxy_data:
+  proxy_letsencrypt:
+  proxy_db:
