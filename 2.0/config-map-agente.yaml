@@ -6,8 +6,8 @@ metadata:
 data:
 #
   zabbix_agentd.conf: |
-    Server=172.20.123.51
-    ServerActive=172.20.123.51
-    Hostname=172.20.123.51
+    Server=10.0.3.189
+    ServerActive=10.0.3.189
+    Hostname=10.0.3.189
     LogFile=/dev/stdout
     DebugLevel=3
