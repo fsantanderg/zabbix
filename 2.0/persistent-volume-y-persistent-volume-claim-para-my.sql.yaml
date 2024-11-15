@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: ebs-sc  # Nombre del StorageClass creado
   capacity:
-    storage: 10Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
@@ -24,4 +24,4 @@ spec:
   storageClassName: ebs-sc  # Nombre del StorageClass creado
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
